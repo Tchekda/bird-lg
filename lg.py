@@ -231,11 +231,11 @@ def whois():
     output = whois_command(query).replace("\n", "<br>")
     return jsonify(output=output, title=query)
 
-# Array of protocols that will be filtered from the summary listing
-SUMMARY_UNWANTED_PROTOS = ["Kernel", "Static", "Device", "BFD", "Direct", "RPKI"]
+# Array of protocols that will be filtered from the summary listing, loaded from config if exists
+SUMMARY_UNWANTED_PROTOS = app.config.get("SUMMARY_UNWANTED_PROTOS", ["Kernel", "Static", "Device", "BFD", "Direct", "RPKI"])
 # Array of regular expressions to match against protocol names,
-# and filter them from the summary view
-SUMMARY_UNWANTED_NAMES = []
+# and filter them from the summary view, loaded from config if exists
+SUMMARY_UNWANTED_NAMES = app.config.get("SUMMARY_UNWANTED_NAMES", [])
 
 COMBINED_UNWANTED_NAMES = None
 if len(SUMMARY_UNWANTED_NAMES) > 0 :  # If regex list is not empty
